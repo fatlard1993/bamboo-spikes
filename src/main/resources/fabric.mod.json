@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "bamboo-spikes-justfatlard",
+  "version": "${version}",
+  "name": "Bamboo Spikes",
+  "description": "Because bamboo",
+  "authors": [
+    "justfatlard"
+  ],
+  "contact": {
+    "sources": ""
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "justfatlard.bamboo_spikes.BambooSpikes"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.7.2",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
