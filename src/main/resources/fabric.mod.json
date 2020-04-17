@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "justfatlard.bamboo_spikes.BambooSpikes"
+      "justfatlard.bamboo_spikes.Main"
     ]
   },
   "depends": {
