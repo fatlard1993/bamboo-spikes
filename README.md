@@ -1,3 +1,8 @@
 # Bamboo Spikes
 
-A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net). This mod adds one block, Bamboo Spikes. Go forth and create traps!
+[![CurseForge](http://cf.way2muchnoise.eu/full_bamboo-spikes_downloads.svg)](http://www.curseforge.com/minecraft/mc-mods/bamboo-spikes)
+[![CurseForge](http://cf.way2muchnoise.eu/versions/bamboo-spikes.svg)](http://www.curseforge.com/minecraft/mc-mods/bamboo-spikes)
+
+A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
+
+This mod adds one block, Bamboo Spikes. These spikes will hurt anything that touches them.
