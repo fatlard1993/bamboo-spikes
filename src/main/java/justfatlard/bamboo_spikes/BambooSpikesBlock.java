@@ -1,5 +1,6 @@
 package justfatlard.bamboo_spikes;
 
+import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
@@ -26,9 +27,13 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
+import xyz.nucleoid.packettweaker.PacketContext;
 
-public class BambooSpikesBlock extends Block implements Waterloggable {
-	private static final EnumProperty<Direction> FACING = FacingBlock.FACING;
+import java.util.EnumMap;
+import java.util.Map;
+
+public class BambooSpikesBlock extends Block implements Waterloggable, PolymerTexturedBlock {
+	public static final EnumProperty<Direction> FACING = FacingBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
 	protected static final VoxelShape UP_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 12.0D, 13.0D);
@@ -38,11 +43,25 @@ public class BambooSpikesBlock extends Block implements Waterloggable {
 	protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 3.0D, 3.0D, 12.0D, 13.0D, 13.0D);
 	protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(4.0D, 3.0D, 3.0D, 16.0D, 13.0D, 13.0D);
 
+	// Polymer block states for each facing direction
+	private final Map<Direction, BlockState> polymerBlockStates = new EnumMap<>(Direction.class);
+
 	public BambooSpikesBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState()
 			.with(FACING, Direction.UP)
 			.with(WATERLOGGED, false));
+	}
+
+	public void setPolymerBlockState(Direction facing, BlockState state) {
+		this.polymerBlockStates.put(facing, state);
+	}
+
+	@Override
+	public BlockState getPolymerBlockState(BlockState state, PacketContext context) {
+		Direction facing = state.get(FACING);
+		BlockState polymerState = this.polymerBlockStates.get(facing);
+		return polymerState != null ? polymerState : state;
 	}
 
 	@Override

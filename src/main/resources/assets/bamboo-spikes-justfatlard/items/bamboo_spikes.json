@@ -1,6 +1,6 @@
 {
-    "model": {
-        "type": "minecraft:model",
-        "model": "bamboo-spikes-justfatlard:block/bamboo_spikes"
-    }
+  "model": {
+    "type": "minecraft:model",
+    "model": "bamboo-spikes-justfatlard:item/bamboo_spikes"
+  }
 }
