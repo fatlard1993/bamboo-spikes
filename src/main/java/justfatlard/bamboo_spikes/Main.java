@@ -70,8 +70,8 @@ public class Main implements ModInitializer {
 		setupPolymerModel(Direction.DOWN, "down");
 		setupPolymerModel(Direction.NORTH, "north");
 		setupPolymerModel(Direction.SOUTH, "south");
-		setupPolymerModel(Direction.EAST, "east");
-		setupPolymerModel(Direction.WEST, "west");
+		setupPolymerModel(Direction.EAST, "west");
+		setupPolymerModel(Direction.WEST, "east");
 
 		// Create Polymer item group (access via /polymer creative)
 		ItemGroup bambooSpikesGroup = PolymerItemGroupUtils.builder()

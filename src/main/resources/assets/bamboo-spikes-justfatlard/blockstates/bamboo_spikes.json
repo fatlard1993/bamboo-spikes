@@ -1,10 +1,10 @@
 {
 	"variants": {
-		"facing=up": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes" },
-		"facing=down": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes", "x": 180 },
-		"facing=east": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes", "y": 90, "x": 90 },
-		"facing=south": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes", "y": 180, "x": 90 },
-		"facing=west": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes", "y": 270, "x": 90 },
-		"facing=north": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes", "y": 0, "x": 90 }
+		"facing=up": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes_up" },
+		"facing=down": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes_down" },
+		"facing=north": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes_north" },
+		"facing=south": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes_south" },
+		"facing=east": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes_east" },
+		"facing=west": { "model": "bamboo-spikes-justfatlard:block/bamboo_spikes_west" }
 	}
 }
