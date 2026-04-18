@@ -1,101 +1,82 @@
 package justfatlard.bamboo_spikes;
 
-import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FacingBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
-import xyz.nucleoid.packettweaker.PacketContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.EnumMap;
-import java.util.Map;
+public class BambooSpikesBlock extends Block implements SimpleWaterloggedBlock {
+	public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-public class BambooSpikesBlock extends Block implements Waterloggable, PolymerTexturedBlock {
-	public static final EnumProperty<Direction> FACING = FacingBlock.FACING;
-	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+	protected static final VoxelShape UP_SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 12.0D, 13.0D);
+	protected static final VoxelShape DOWN_SHAPE = Block.box(3.0D, 4.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+	protected static final VoxelShape NORTH_SHAPE = Block.box(3.0D, 3.0D, 4.0D, 13.0D, 13.0D, 16.0D);
+	protected static final VoxelShape SOUTH_SHAPE = Block.box(3.0D, 3.0D, 0.0D, 13.0D, 13.0D, 12.0D);
+	protected static final VoxelShape EAST_SHAPE = Block.box(0.0D, 3.0D, 3.0D, 12.0D, 13.0D, 13.0D);
+	protected static final VoxelShape WEST_SHAPE = Block.box(4.0D, 3.0D, 3.0D, 16.0D, 13.0D, 13.0D);
 
-	protected static final VoxelShape UP_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 12.0D, 13.0D);
-	protected static final VoxelShape DOWN_SHAPE = Block.createCuboidShape(3.0D, 4.0D, 3.0D, 13.0D, 16.0D, 13.0D);
-	protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(3.0D, 3.0D, 4.0D, 13.0D, 13.0D, 16.0D);
-	protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(3.0D, 3.0D, 0.0D, 13.0D, 13.0D, 12.0D);
-	protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 3.0D, 3.0D, 12.0D, 13.0D, 13.0D);
-	protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(4.0D, 3.0D, 3.0D, 16.0D, 13.0D, 13.0D);
-
-	// Polymer block states for each facing direction
-	private final Map<Direction, BlockState> polymerBlockStates = new EnumMap<>(Direction.class);
-
-	public BambooSpikesBlock(Settings settings) {
+	public BambooSpikesBlock(Properties settings) {
 		super(settings);
-		this.setDefaultState(this.stateManager.getDefaultState()
-			.with(FACING, Direction.UP)
-			.with(WATERLOGGED, false));
-	}
-
-	public void setPolymerBlockState(Direction facing, BlockState state) {
-		this.polymerBlockStates.put(facing, state);
-	}
-
-	@Override
-	public BlockState getPolymerBlockState(BlockState state, PacketContext context) {
-		Direction facing = state.get(FACING);
-		BlockState polymerState = this.polymerBlockStates.get(facing);
-		return polymerState != null ? polymerState : state;
+		this.registerDefaultState(this.getStateDefinition().any()
+			.setValue(FACING, Direction.UP)
+			.setValue(WATERLOGGED, false));
 	}
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-		if (state.get(WATERLOGGED)) {
-			tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+	protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		if (state.getValue(WATERLOGGED)) {
+			tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
-		return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+		return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext context) {
-		BlockPos blockPos = context.getBlockPos();
-		Direction direction = context.getSide();
-		BlockState blockState = context.getWorld().getBlockState(blockPos.offset(direction.getOpposite()));
-		boolean waterlogged = context.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER;
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		BlockPos blockPos = context.getClickedPos();
+		Direction direction = context.getClickedFace();
+		BlockState blockState = context.getLevel().getBlockState(blockPos.relative(direction.getOpposite()));
+		boolean waterlogged = context.getLevel().getFluidState(blockPos).getType() == Fluids.WATER;
 
-		Direction facing = blockState.getBlock() == this && blockState.get(FACING) == direction
+		Direction facing = blockState.getBlock() == this && blockState.getValue(FACING) == direction
 			? direction.getOpposite()
 			: direction;
 
-		return this.getDefaultState()
-			.with(FACING, facing)
-			.with(WATERLOGGED, waterlogged);
+		return this.defaultBlockState()
+			.setValue(FACING, facing)
+			.setValue(WATERLOGGED, waterlogged);
 	}
 
 	@Override
-	protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return switch (state.get(FACING)) {
+	protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		return switch (state.getValue(FACING)) {
 			case DOWN -> DOWN_SHAPE;
 			case NORTH -> NORTH_SHAPE;
 			case SOUTH -> SOUTH_SHAPE;
@@ -106,30 +87,32 @@ public class BambooSpikesBlock extends Block implements Waterloggable, PolymerTe
 	}
 
 	@Override
-	protected VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		// Return empty collision so entities can walk into the spikes and trigger onEntityCollision
-		return VoxelShapes.empty();
+	protected VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		// Return empty collision so entities can walk into the spikes and trigger entityInside
+		return Shapes.empty();
 	}
 
 	@Override
-	protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean collidedWithFluid) {
-		if (!world.isClient() && world instanceof ServerWorld serverWorld) {
-			if (entity.getType() == EntityType.PLAYER || entity.getType().getSpawnGroup() != SpawnGroup.MISC) {
-				entity.damage(serverWorld, world.getDamageSources().cactus(), 2.0F);
+	protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean movedByPiston) {
+		if (!world.isClientSide() && world instanceof ServerLevel serverWorld) {
+			// PLAYER is explicitly checked because its spawn group is MISC,
+			// which would otherwise exclude it from the living-entity filter
+			if (entity.getType() == EntityType.PLAYER || entity.getType().getCategory() != MobCategory.MISC) {
+				entity.hurt(serverWorld.damageSources().cactus(), 2.0F);
 			}
 		}
 	}
 
 	@Override
-	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
-		if (!world.isClient() && world instanceof ServerWorld serverWorld) {
-			entity.handleFallDamage((float) fallDistance, 5.0F, serverWorld.getDamageSources().fall());
+	public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
+		if (!world.isClientSide() && world instanceof ServerLevel serverWorld) {
+			entity.causeFallDamage((float) fallDistance, 5.0F, serverWorld.damageSources().fall());
 		}
-		super.onLandedUpon(world, state, pos, entity, fallDistance);
+		super.fallOn(world, state, pos, entity, fallDistance);
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 }
