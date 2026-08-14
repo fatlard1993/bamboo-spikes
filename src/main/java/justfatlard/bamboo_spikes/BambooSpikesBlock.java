@@ -5,7 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -97,7 +97,7 @@ public class BambooSpikesBlock extends Block implements SimpleWaterloggedBlock {
 		if (!world.isClientSide() && world instanceof ServerLevel serverWorld) {
 			// PLAYER is explicitly checked because its spawn group is MISC,
 			// which would otherwise exclude it from the living-entity filter
-			if (entity.getType() == EntityType.PLAYER || entity.getType().getCategory() != MobCategory.MISC) {
+			if (entity.getType() == EntityTypes.PLAYER || entity.getType().getCategory() != MobCategory.MISC) {
 				entity.hurt(serverWorld.damageSources().cactus(), 2.0F);
 			}
 		}

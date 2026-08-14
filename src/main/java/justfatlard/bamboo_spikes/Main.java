@@ -41,7 +41,6 @@ public class Main implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// Register with Pandorical if available
 		if (PandoricalApi.isAvailable()) {
 			PandoricalApi.content().registerBlock(MOD_ID + ":bamboo_spikes", new BlockRegistration()
 				.model(MOD_ID + ":block/bamboo_spikes_up"));
@@ -50,11 +49,9 @@ public class Main implements ModInitializer {
 			PandoricalApi.content().registerModAssets(MOD_ID);
 		}
 
-		// Register block and item
 		Registry.register(BuiltInRegistries.BLOCK, BAMBOO_SPIKES_ID, BAMBOO_SPIKES_BLOCK);
 		Registry.register(BuiltInRegistries.ITEM, BAMBOO_SPIKES_ID, BAMBOO_SPIKES_ITEM);
 
-		// Create creative tab
 		ResourceKey<CreativeModeTab> tabKey = ResourceKey.create(
 			Registries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath(MOD_ID, "bamboo_spikes"));
 		CreativeModeTab bambooSpikesGroup = FabricCreativeModeTab.builder()

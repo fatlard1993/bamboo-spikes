@@ -1,15 +1,10 @@
 # Bamboo Spikes
 
-A Fabric mod for Minecraft 1.21.11 that adds bamboo spikes - a trap block that damages anything that touches it.
-
-![Minecraft 1.21.11](https://img.shields.io/badge/Minecraft-1.21.11-green)
-![Fabric](https://img.shields.io/badge/Mod%20Loader-Fabric-blue)
-![Server-Side](https://img.shields.io/badge/Server--Side-Compatible-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+A Fabric mod that adds bamboo spikes - a trap block crafted from bamboo that damages anything that touches it.
 
 ## Features
 
-- **Bamboo Spikes Block**: A trap that damages any entity that touches it (2 damage per tick)
+- **Bamboo Spikes Block**: A trap that damages any living entity (including players) that touches it
 - **Increased Fall Damage**: Falling onto spikes deals 5x normal fall damage
 - **Directional Placement**: Can be placed on any surface (floor, ceiling, walls)
 - **No Collision**: Entities walk through the spikes while taking damage
@@ -21,28 +16,17 @@ A Fabric mod for Minecraft 1.21.11 that adds bamboo spikes - a trap block that d
 ![Bamboo Spikes](img.png)
 ![Bamboo Spikes on Bamboo](img2.png)
 
-## Installation
-
-1. Install [Fabric Loader](https://fabricmc.net/use/) for Minecraft 1.21.11
-2. Download and install [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download the latest release of Bamboo Spikes
-4. Place the jar file in your `mods` folder
-
-### Server-Side Installation
-
-This mod works on servers with vanilla clients! When installed on a server:
-- Vanilla clients will be prompted to download a resource pack
-- If accepted, they see custom textures
-- If declined, gameplay features still work
-
-Polymer is bundled with the mod - no additional downloads required.
-
 ## Requirements
 
-- Minecraft 1.21.11
-- Fabric Loader 0.18.0+
-- Fabric API
-- Polymer (bundled)
+Targets the Minecraft, Fabric Loader, Fabric API, and Java versions declared in this mod's `gradle.properties`; check there for the exact currently-supported version.
+
+## Pandorical
+
+Bamboo Spikes uses Pandorical to register its block and item models and sync them (and the mod's other assets) to clients for correct rendering. Pandorical is declared as a hard dependency in `fabric.mod.json`, so it must be installed on both server and client for this mod to load at all: there is no vanilla-client fallback.
+
+## Installation
+
+Install alongside its declared dependencies (see `fabric.mod.json`).
 
 ## License
 
