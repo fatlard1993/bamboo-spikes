@@ -16,18 +16,14 @@ A Fabric mod that adds bamboo spikes - a trap block crafted from bamboo that dam
 ![Bamboo Spikes](img.png)
 ![Bamboo Spikes on Bamboo](img2.png)
 
-## Requirements
-
-Targets the Minecraft, Fabric Loader, Fabric API, and Java versions declared in this mod's `gradle.properties`; check there for the exact currently-supported version.
-
 ## Pandorical
 
 Bamboo Spikes uses Pandorical to register its block and item models and sync them (and the mod's other assets) to clients for correct rendering. Pandorical is declared as a hard dependency in `fabric.mod.json`, so it must be installed on both server and client for this mod to load at all: there is no vanilla-client fallback.
 
 ## Installation
 
-Install alongside its declared dependencies (see `fabric.mod.json`).
+Install server-side alongside its declared dependencies (see `fabric.mod.json`); connecting clients need only Pandorical. Version targets live in `gradle.properties` (Minecraft, loader, Fabric API) and `fabric.mod.json` (Java).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT, see [LICENSE](LICENSE).
