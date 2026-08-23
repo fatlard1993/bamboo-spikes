@@ -43,6 +43,7 @@ public class Main implements ModInitializer {
 	public void onInitialize() {
 		if (PandoricalApi.isAvailable()) {
 			PandoricalApi.content().registerBlock(MOD_ID + ":bamboo_spikes", new BlockRegistration()
+				.baseBlock("minecraft:bamboo")
 				.model(MOD_ID + ":block/bamboo_spikes_up"));
 			PandoricalApi.content().registerItem(MOD_ID + ":bamboo_spikes", new ItemRegistration()
 				.model(MOD_ID + ":item/bamboo_spikes"));
