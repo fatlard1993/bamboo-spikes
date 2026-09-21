@@ -1,0 +1,18 @@
+{
+	"schemaVersion": 1,
+	"id": "bamboo-spikes-gametest",
+	"version": "1.0.0",
+	"name": "Bamboo Spikes smoke test",
+	"description": "Loads the mod, joins a world, and fails if anything on the way threw.",
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"justfatlard.bamboo_spikes.gametest.SmokeTest"
+		]
+	},
+	"depends": {
+		"bamboo-spikes-justfatlard": "*",
+		"fabric-client-gametest-api-v1": "*"
+	}
+}

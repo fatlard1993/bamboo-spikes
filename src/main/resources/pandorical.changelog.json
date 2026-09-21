@@ -1,0 +1,14 @@
+{
+  "overview": [
+    "Bamboo spikes: a trap block made from five bamboo that hurts anything walking onto it, and hurts a great deal more if you fall onto it."
+  ],
+  "versions": {
+    "2.0.1": [
+      "Spikes drop through the game's own loot tables, so anything that changes what blocks drop reaches them too."
+    ],
+    "2.0.0": [
+      "A heart of damage to anything that touches the spikes and five times fall damage onto them. They go on floors, walls and ceilings, take water, and have no collision, so you walk straight through while taking the hit.",
+      "Villagers, golems, armor stands and mannequins are left alone, and every recipe brings the advancement that unlocks it."
+    ]
+  }
+}
