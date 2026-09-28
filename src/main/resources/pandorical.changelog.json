@@ -7,14 +7,14 @@
       "Rebuilt against Pandorical 15."
     ],
     "2.0.1": [
-      "Spikes drop through the game's own loot tables, so anything that changes drops reaches them."
+      "Spikes use normal loot tables, so drop-altering mods affect them."
     ],
     "2.0.0": [
       "A heart of damage to anything that touches the spikes, and five times fall damage onto them.",
       "They go on floors, walls and ceilings, and take water.",
       "No collision, so you walk straight through while taking the hit.",
       "Villagers, golems, armor stands and mannequins are left alone.",
-      "Every recipe brings the advancement that unlocks it."
+      "Each spike recipe has its own advancement."
     ]
   }
 }
