@@ -3,6 +3,9 @@
     "Bamboo spikes: a trap block made from five bamboo that hurts anything walking onto it, and hurts a great deal more if you fall onto it."
   ],
   "versions": {
+    "2.0.3": [
+      "Mod Menu's Donate button leads to sponsoring the author on GitHub. Nothing in play changes."
+    ],
     "2.0.2": [
       "Rebuilt against Pandorical 15."
     ],
