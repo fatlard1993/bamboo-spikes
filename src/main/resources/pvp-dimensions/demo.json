@@ -1,0 +1,37 @@
+{
+  "demo": {
+    "name": "Bamboo Spikes",
+    "icon": "bamboo-spikes-justfatlard:bamboo_spikes",
+    "about": [
+      "A trap of bamboo that hurts whatever walks through it, and hurts five times as much to fall on.",
+      "Zombies are coming. Lay spikes on the floor, the walls or the ceiling, and watch them walk in."
+    ]
+  },
+  "pvp_preset": 1,
+  "needs": ["bamboo-spikes-justfatlard"],
+  "preset": {
+    "name": "Bamboo Spikes",
+    "icon": "bamboo-spikes-justfatlard:bamboo_spikes",
+    "pvp": false,
+    "game_mode": "survival",
+    "entry_kit": [
+      {"slot": 0, "item": {"id": "bamboo-spikes-justfatlard:bamboo_spikes", "count": 64}},
+      {"slot": 1, "item": {"id": "minecraft:stone_sword", "count": 1}},
+      {"slot": 2, "item": {"id": "minecraft:oak_planks", "count": 64}},
+      {"slot": 3, "item": {"id": "minecraft:cooked_beef", "count": 8}},
+      {"slot": 38, "item": {"id": "minecraft:iron_chestplate", "count": 1}}
+    ],
+    "respawn_kit": "entry",
+    "goal": "time",
+    "mobs": "always",
+    "mob_rarity": "common",
+    "mob_default": "off",
+    "mob_levels": { "minecraft:zombie": "normal", "minecraft:spider": "normal" },
+    "life": 15,
+    "size": 3,
+    "world": "overworld",
+    "shape": "flat",
+    "biome": "minecraft:bamboo_jungle",
+    "weather": "clear"
+  }
+}
